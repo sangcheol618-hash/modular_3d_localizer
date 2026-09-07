@@ -1,0 +1,19 @@
+# Colcon build artifacts
+build/
+install/
+log/
+
+# IDE and Python cache files
+.vscode/
+__pycache__/
+*.py[cod]
+
+# Large, externally obtained data
+*.db3
+*.mcap
+*.bag
+*.pcd
+*.ply
+
+# ROS runtime files
+.ros/

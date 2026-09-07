@@ -1,0 +1,16 @@
+modular_3d_localizer_node:
+  ros__parameters:
+    localization_backend: fast_gicp
+    map_voxel_leaf_size: 0.3
+    lidar_voxel_leaf_size: 0.2
+    max_registration_rate_hz: 1.0
+    fast_gicp_max_iterations: 20
+    fast_gicp_max_correspondence_distance: 3.0
+    fast_gicp_transformation_epsilon: 0.0001
+    fast_gicp_correspondence_randomness: 10
+    fast_gicp_num_threads: 0
+    use_local_map: true
+    local_map_radius: 30.0
+    registration_max_fitness_score: 0.5
+    registration_max_translation_jump_meters: 0.3
+    registration_max_rotation_jump_radians: 0.15
