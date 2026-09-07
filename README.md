@@ -3,6 +3,10 @@
 `modular_3d_localizer` is a ROS 2 Humble framework for full SE(3) localization
 of an incoming 3D point cloud against a static PCD or PLY map.
 
+## Demo
+
+[KISS-ICP frontend and FastGICP map-localization demo (YouTube)](https://youtu.be/Drk_Oqwzhg4)
+
 ## Input and TF contract
 
 Required inputs are a static map, a `sensor_msgs/msg/PointCloud2` scan topic,
