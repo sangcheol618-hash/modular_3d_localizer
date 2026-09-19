@@ -4,7 +4,7 @@
   <name>modular_3d_localizer</name>
   <version>0.0.0</version>
   <description>Modular ROS 2 framework for full SE(3) localization against static 3D point cloud maps.</description>
-  <maintainer email="Sangcheol2580@daum.net">osc</maintainer>
+  <maintainer email="sangcheol618@gmail.com">osc</maintainer>
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
