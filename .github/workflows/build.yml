@@ -1,0 +1,55 @@
+name: ROS 2 Humble build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    container: osrf/ros:humble-desktop
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install build tools and ROS dependencies
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            build-essential \
+            cmake \
+            git \
+            libeigen3-dev \
+            libomp-dev \
+            libpcl-dev \
+            python3-colcon-common-extensions \
+            ros-humble-diagnostic-msgs \
+            ros-humble-geometry-msgs \
+            ros-humble-nav-msgs \
+            ros-humble-pcl-conversions \
+            ros-humble-tf2-ros \
+            ros-humble-yaml-cpp-vendor
+
+      - name: Build the required FastGICP dependency
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          git clone --depth 1 --recurse-submodules \
+            https://github.com/koide3/fast_gicp.git /tmp/fast_gicp
+          cmake -S /tmp/fast_gicp -B /tmp/fast_gicp/build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX=/opt/fast_gicp \
+            -DBUILD_VGICP_CUDA=OFF
+          cmake --build /tmp/fast_gicp/build --parallel 2
+          cmake --install /tmp/fast_gicp/build
+
+      - name: Build modular_3d_localizer
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          colcon build --packages-select modular_3d_localizer \
+            --event-handlers console_direct+ \
+            --cmake-args -DFAST_GICP_PREFIX=/opt/fast_gicp

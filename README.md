@@ -3,6 +3,25 @@
 `modular_3d_localizer` is a ROS 2 Humble framework for full SE(3) localization
 of an incoming 3D point cloud against a static PCD or PLY map.
 
+## Architecture
+
+```mermaid
+flowchart LR
+    MAP[Static PCD / PLY map] --> LME[Local map extraction]
+    SCAN[PointCloud2 scan] --> PRE[Point cloud preprocessing]
+    ODOM[Optional odometry prior] --> MOTION[Motion model]
+    PRE --> REG[Registration backend\nFastGICP / PCL GICP]
+    LME --> REG
+    MOTION --> REG
+    REG --> VALIDATE[Pose validation]
+    VALIDATE --> OUTPUT[Pose, map to odom TF, diagnostics, RViz]
+```
+
+The ROS 2 interfaces around registration are independent of the selected
+backend. Adding an algorithm therefore changes the backend implementation and
+factory registration, not map I/O, point-cloud conversion, TF integration, or
+visualization.
+
 ## Demo
 
 [![KISS-ICP frontend and FastGICP map-localization demo](https://img.youtube.com/vi/Drk_Oqwzhg4/hqdefault.jpg)](https://youtu.be/Drk_Oqwzhg4)
@@ -64,6 +83,9 @@ colcon build --packages-select modular_3d_localizer --symlink-install \
   -DFAST_GICP_PREFIX=/path/to/fast_gicp/install
 export LD_LIBRARY_PATH=/path/to/fast_gicp/install/lib:$LD_LIBRARY_PATH
 ```
+
+The repository CI builds FastGICP from its official source repository before
+building this package; it does not require CUDA.
 
 Then use the profile and override only environment-specific values:
 
