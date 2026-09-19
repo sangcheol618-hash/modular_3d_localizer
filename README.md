@@ -5,7 +5,9 @@ of an incoming 3D point cloud against a static PCD or PLY map.
 
 ## Demo
 
-[KISS-ICP frontend and FastGICP map-localization demo (YouTube)](https://youtu.be/Drk_Oqwzhg4)
+[![KISS-ICP frontend and FastGICP map-localization demo](https://img.youtube.com/vi/Drk_Oqwzhg4/hqdefault.jpg)](https://youtu.be/Drk_Oqwzhg4)
+
+KISS-ICP frontend and FastGICP map-localization demo. Click the thumbnail to watch on YouTube.
 
 ## Input and TF contract
 
